@@ -1,0 +1,47 @@
+---
+
+- name: Test distribution
+  assert:
+    that: ansible_os_family == "RedHat"
+
+- name: Create Filebeat YUM repo file
+  yum_repository:
+    name: Filebeat
+    description: Filebeat YUM repo
+    baseurl: "{{ filebeat_yum_repo_url }}"
+    gpgkey: "{{ filebeat_yum_repo_key }}"
+    params: "{{ filebeat_yum_repo_params }}"
+  tags:
+    - filebeat_pkg
+
+- name: Install Filebeat package
+  package:
+    name: "{{ filebeat_pkg }}"
+  notify:
+    - Restart Filebeat service
+  tags:
+    - filebeat_pkg
+
+- name: Configure Filebeat
+  template:
+    src: filebeat.yml.j2
+    dest: "{{ filebeat_config_file }}"
+  notify:
+    - Restart Filebeat service
+  tags:
+    - filebeat_config
+
+- name: Enable Filebeat service
+  service:
+    name: "{{ filebeat_service }}"
+    enabled: yes
+  tags:
+    - filebeat_service
+
+- name: Start Filebeat service
+  service:
+    name: "{{ filebeat_service }}"
+    state: started
+  register: filebeat_service_started
+  tags:
+    - filebeat_service

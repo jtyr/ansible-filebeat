@@ -1,0 +1,9 @@
+---
+
+- name: Restart Filebeat service
+  service:
+    name: "{{ filebeat_service }}"
+    state: restarted
+  when: >
+    filebeat_service_started is not defined or
+    not filebeat_service_started.changed
