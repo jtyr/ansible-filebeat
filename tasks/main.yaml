@@ -6,7 +6,7 @@
 
 - name: Create Filebeat YUM repo file
   yum_repository:
-    name: Filebeat
+    name: filebeat
     description: Filebeat YUM repo
     baseurl: "{{ filebeat_yum_repo_url }}"
     gpgkey: "{{ filebeat_yum_repo_key }}"
