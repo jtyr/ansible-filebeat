@@ -159,6 +159,7 @@ Dependencies
 
 - [`config_encoder_filters`](https://github.com/jtyr/ansible-config_encoder_filters)
 - [`elasticsearch`](https://github.com/jtyr/ansible-elasticsearch) (optional)
+- [`logstash`](https://github.com/jtyr/ansible-logstash) (optional)
 
 
 License
