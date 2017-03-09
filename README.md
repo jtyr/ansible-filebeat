@@ -26,9 +26,16 @@ Examples
 - name: Example of how to add new output
   hosts: all
   vars:
+    # What to monitor
+    filebeat_config_filebeat_prospectors__custom:
+      - input_type: log
+        document_type: apache
+        paths:
+          - /var/log/httpd/*_log
     # Add second output to Logstash
     filebeat_config_output__custom:
       logstash:
+        index: filebeat
         hosts:
           - 127.0.0.1:5044
    roles:
@@ -37,9 +44,16 @@ Examples
 - name: Example of how to set output only to Logstash
   hosts: all
   vars:
+    # What to monitor
+    filebeat_config_filebeat_prospectors__custom:
+      - input_type: log
+        document_type: apache
+        paths:
+          - /var/log/httpd/*_log
     # Redefine the output to be only for Logstash
     filebeat_config_output:
       logstash:
+        index: filebeat
         hosts:
           - 127.0.0.1:5044
    roles:
@@ -62,10 +76,10 @@ filebeat_pkg: filebeat
 filebeat_config_file: /etc/filebeat/filebeat.yml
 
 # YUM repo URL
-filebeat_yum_repo_url: https://packages.elastic.co/beats/yum/el/$basearch/
+filebeat_yum_repo_url: https://artifacts.elastic.co/packages/5.x/yum
 
 # YUM repo GPG key
-filebeat_yum_repo_key: https://packages.elastic.co/GPG-KEY-elasticsearch
+filebeat_yum_repo_key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
 # Extra EPEL YUM repo params
 filebeat_yum_repo_params: {}
@@ -159,6 +173,7 @@ Dependencies
 
 - [`config_encoder_filters`](https://github.com/jtyr/ansible-config_encoder_filters)
 - [`elasticsearch`](https://github.com/jtyr/ansible-elasticsearch) (optional)
+- [`kibana`](https://github.com/jtyr/ansible-kibana) (optional)
 - [`logstash`](https://github.com/jtyr/ansible-logstash) (optional)
 
 

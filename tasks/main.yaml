@@ -6,9 +6,8 @@
 
 - name: Create Filebeat YUM repo file
   yum_repository:
-    name: filebeat
-    description: Filebeat YUM repo
-    file: elastic
+    name: elastic
+    description: Elastic YUM repo
     baseurl: "{{ filebeat_yum_repo_url }}"
     gpgkey: "{{ filebeat_yum_repo_key }}"
     params: "{{ filebeat_yum_repo_params }}"
