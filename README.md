@@ -76,10 +76,10 @@ filebeat_pkg: filebeat
 filebeat_config_file: /etc/filebeat/filebeat.yml
 
 # YUM repo URL
-filebeat_yum_repo_url: https://artifacts.elastic.co/packages/5.x/yum
+filebeat_yum_repo_url: "{{ elastic_yum_repo_url | default('https://artifacts.elastic.co/packages/5.x/yum') }}"
 
 # YUM repo GPG key
-filebeat_yum_repo_key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+filebeat_yum_repo_key: "{{ elastic_yum_repo_key | default('https://artifacts.elastic.co/GPG-KEY-elasticsearch') }}"
 
 # Extra EPEL YUM repo params
 filebeat_yum_repo_params: {}
