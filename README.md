@@ -82,7 +82,7 @@ filebeat_yum_repo_url: "{{ elastic_yum_repo_url | default('https://artifacts.ela
 filebeat_yum_repo_key: "{{ elastic_yum_repo_key | default('https://artifacts.elastic.co/GPG-KEY-elasticsearch') }}"
 
 # Extra EPEL YUM repo params
-filebeat_yum_repo_params: {}
+filebeat_yum_repo_params: "{{ elastic_yum_repo_params | default({}) }}"
 
 # Name of the service
 filebeat_service: filebeat
