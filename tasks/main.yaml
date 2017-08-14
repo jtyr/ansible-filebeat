@@ -2,7 +2,9 @@
 
 - name: Test distribution
   assert:
-    that: ansible_os_family == "RedHat"
+    that: >
+      ansible_os_family == "RedHat" or
+      ansible_os_family == "Debian"
 
 - name: Create Filebeat YUM repo file
   yum_repository:
@@ -11,8 +13,28 @@
     baseurl: "{{ filebeat_yum_repo_url }}"
     gpgkey: "{{ filebeat_yum_repo_key }}"
     params: "{{ filebeat_yum_repo_params }}"
+  when: >
+    ansible_os_family == 'Redhat'
   tags:
     - filebeat_pkg
+
+- name: Install Kibana GPG key
+  apt_key:
+    url: "{{ filebeat_apt_repo_key }}"
+  when: >
+    ansible_os_family == 'Debian'
+  tags:
+    - filebeat_pkg
+    - filebeat_aptrepo
+
+- name: Create Kibana APT repo file
+  apt_repository:
+    repo: "{{ filebeat_apt_repo_string }}"
+  when: >
+    ansible_os_family == 'Debian'
+  tags:
+    - filebeat_pkg
+    - filebeat_aptrepo
 
 - name: Install Filebeat package
   package:

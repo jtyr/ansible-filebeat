@@ -84,6 +84,12 @@ filebeat_yum_repo_key: "{{ elastic_yum_repo_key | default('https://artifacts.ela
 # Extra EPEL YUM repo params
 filebeat_yum_repo_params: "{{ elastic_yum_repo_params | default({}) }}"
 
+# GPG key for the APT repo
+filebeat_apt_repo_key: "{{ elastic_apt_repo_key | default('https://artifacts.elastic.co/GPG-KEY-elasticsearch') }}"
+
+# APT repo string
+filebeat_apt_repo_string: "{{ elastic_apt_repo_string | default('deb https://artifacts.elastic.co/packages/5.x/apt stable main') }}"
+
 # Name of the service
 filebeat_service: filebeat
 
