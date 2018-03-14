@@ -76,7 +76,7 @@ filebeat_pkg: filebeat
 filebeat_config_file: /etc/filebeat/filebeat.yml
 
 # YUM repo URL
-filebeat_yum_repo_url: "{{ elastic_yum_repo_url | default('https://artifacts.elastic.co/packages/5.x/yum') }}"
+filebeat_yum_repo_url: "{{ elastic_yum_repo_url | default('https://artifacts.elastic.co/packages/6.x/yum') }}"
 
 # YUM repo GPG key
 filebeat_yum_repo_key: "{{ elastic_yum_repo_key | default('https://artifacts.elastic.co/GPG-KEY-elasticsearch') }}"
@@ -88,7 +88,7 @@ filebeat_yum_repo_params: "{{ elastic_yum_repo_params | default({}) }}"
 filebeat_apt_repo_key: "{{ elastic_apt_repo_key | default('https://artifacts.elastic.co/GPG-KEY-elasticsearch') }}"
 
 # APT repo string
-filebeat_apt_repo_string: "{{ elastic_apt_repo_string | default('deb https://artifacts.elastic.co/packages/5.x/apt stable main') }}"
+filebeat_apt_repo_string: "{{ elastic_apt_repo_string | default('deb https://artifacts.elastic.co/packages/6.x/apt stable main') }}"
 
 # Name of the service
 filebeat_service: filebeat

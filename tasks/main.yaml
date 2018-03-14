@@ -14,7 +14,7 @@
     gpgkey: "{{ filebeat_yum_repo_key }}"
     params: "{{ filebeat_yum_repo_params }}"
   when: >
-    ansible_os_family == 'Redhat'
+    ansible_os_family == 'RedHat'
   tags:
     - filebeat_pkg
 
