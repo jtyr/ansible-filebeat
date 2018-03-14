@@ -18,7 +18,7 @@
   tags:
     - filebeat_pkg
 
-- name: Install Kibana GPG key
+- name: Install Filebeat GPG key
   apt_key:
     url: "{{ filebeat_apt_repo_key }}"
   when: >
@@ -27,7 +27,7 @@
     - filebeat_pkg
     - filebeat_aptrepo
 
-- name: Create Kibana APT repo file
+- name: Create Filebeat APT repo file
   apt_repository:
     repo: "{{ filebeat_apt_repo_string }}"
   when: >
