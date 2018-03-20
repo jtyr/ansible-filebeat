@@ -49,7 +49,7 @@
     src: filebeat.yml.j2
     dest: "{{ filebeat_config_file }}"
   notify:
-    - Restart Filebeat service
+    - Reload Filebeat service
   tags:
     - filebeat_config
 
