@@ -8,16 +8,3 @@
   when: >
     filebeat_service_started is not defined or
     not filebeat_service_started.changed
-
-- name: Reload Filebeat service
-  service:
-    name: "{{ filebeat_service }}"
-    state: reloaded
-  when: >
-    (
-      filebeat_service_started is not defined or
-      not filebeat_service_started.changed
-    ) and (
-      filebeat_service_restarted is not defined or
-      not filebeat_service_restarted.changed
-    )
