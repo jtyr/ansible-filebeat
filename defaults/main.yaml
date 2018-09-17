@@ -25,27 +25,27 @@ filebeat_apt_repo_string: "{{ elastic_apt_repo_string | default('deb https://art
 filebeat_service: filebeat
 
 
-# Default paths of the filebeat prospectors
-filebeat_config_filebeat_prospectors_paths:
+# Default paths of the filebeat inputs
+filebeat_config_filebeat_inputs_paths:
   - /var/log/*.log
 
-# Default filebeat prospectors
-filebeat_config_filebeat_prospectors__default:
-  - input_type: log
-    paths: "{{ filebeat_config_filebeat_prospectors_paths }}"
+# Default filebeat inputs
+filebeat_config_filebeat_inputs__default:
+  - type: log
+    paths: "{{ filebeat_config_filebeat_inputs_paths }}"
 
-# Custom filebeat prospectors
-filebeat_config_filebeat_prospectors__custom: []
+# Custom filebeat inputs
+filebeat_config_filebeat_inputs__custom: []
 
-# Final filebeat prospectors
-filebeat_config_filebeat_prospectors: "{{
-  filebeat_config_filebeat_prospectors__default +
-  filebeat_config_filebeat_prospectors__custom }}"
+# Final filebeat inputs
+filebeat_config_filebeat_inputs: "{{
+  filebeat_config_filebeat_inputs__default +
+  filebeat_config_filebeat_inputs__custom }}"
 
 
 # Default paths of the filebeat
 filebeat_config_filebeat__default:
-  prospectors: "{{ filebeat_config_filebeat_prospectors }}"
+  inputs: "{{ filebeat_config_filebeat_inputs }}"
 
 # Custom filebeat
 filebeat_config_filebeat__custom: {}

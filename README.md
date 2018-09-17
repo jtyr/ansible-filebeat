@@ -15,7 +15,7 @@ Please report any issues or send PR.
 Examples
 --------
 
-```
+```yaml
 ---
 
 - name: Example of how to install Filebeat with default configuration
@@ -27,11 +27,12 @@ Examples
   hosts: all
   vars:
     # What to monitor
-    filebeat_config_filebeat_prospectors__custom:
-      - input_type: log
-        document_type: apache
+    filebeat_config_filebeat_inputs__custom:
+      - type: log
         paths:
           - /var/log/httpd/*_log
+        fields:
+          app: apache
     # Add second output to Logstash
     filebeat_config_output__custom:
       logstash:
@@ -45,11 +46,12 @@ Examples
   hosts: all
   vars:
     # What to monitor
-    filebeat_config_filebeat_prospectors__custom:
-      - input_type: log
-        document_type: apache
+    filebeat_config_filebeat_inputs__custom:
+      - type: log
         paths:
           - /var/log/httpd/*_log
+        fields:
+          app: apache
     # Redefine the output to be only for Logstash
     filebeat_config_output:
       logstash:
@@ -68,7 +70,7 @@ know if such feature would be useful for you and I might implement it.
 Role variables
 --------------
 
-```
+```yaml
 # Package to be installed (explicit version can be specified here)
 filebeat_pkg: filebeat
 
