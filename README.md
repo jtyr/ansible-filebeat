@@ -3,11 +3,11 @@ filebeat
 
 Ansible role which helps to install and configure Elastic Filebeat.
 
-The configuration of the role is done in such way that it should not be
-necessary to change the role for any kind of configuration. All can be
-done either by changing role parameters or by declaring completely new
-configuration as a variable. That makes this role absolutely
-universal. See the examples below for more details.
+The configuration of the role is done in such way that it should not be necessary
+to change the role for any kind of configuration. All can be done either by
+changing role parameters or by declaring completely new configuration as a
+variable. That makes this role absolutely universal. See the examples below for
+more details.
 
 Please report any issues or send PR.
 
@@ -71,9 +71,6 @@ Role variables
 --------------
 
 ```yaml
-# Package to be installed (explicit version can be specified here)
-filebeat_pkg: filebeat
-
 # Location of the config file
 filebeat_config_file: /etc/filebeat/filebeat.yml
 
@@ -83,7 +80,7 @@ filebeat_yum_repo_url: "{{ elastic_yum_repo_url | default('https://artifacts.ela
 # YUM repo GPG key
 filebeat_yum_repo_key: "{{ elastic_yum_repo_key | default('https://artifacts.elastic.co/GPG-KEY-elasticsearch') }}"
 
-# Extra EPEL YUM repo params
+# Extra YUM repo params
 filebeat_yum_repo_params: "{{ elastic_yum_repo_params | default({}) }}"
 
 # GPG key for the APT repo
@@ -92,40 +89,45 @@ filebeat_apt_repo_key: "{{ elastic_apt_repo_key | default('https://artifacts.ela
 # APT repo string
 filebeat_apt_repo_string: "{{ elastic_apt_repo_string | default('deb https://artifacts.elastic.co/packages/6.x/apt stable main') }}"
 
+# Extra APT repo params
+filebeat_apt_repo_params: "{{ elastic_apt_repo_params | default({}) }}"
+
+# Package to be installed (explicit version can be specified here)
+filebeat_pkg: filebeat
+
 # Name of the service
 filebeat_service: filebeat
 
 
-# Default paths of the filebeat prospectors
-filebeat_config_filebeat_prospectors_paths:
+# Default paths of the filebeat inputs
+filebeat_config_filebeat_inputs_paths:
   - /var/log/*.log
 
-# Default filebeat prospectors
-filebeat_config_filebeat_prospectors__default:
-  - input_type: log
-    paths: "{{ filebeat_config_filebeat_prospectors_paths }}"
+# Default filebeat inputs
+filebeat_config_filebeat_inputs__default:
+  - type: log
+    paths: "{{ filebeat_config_filebeat_inputs_paths }}"
 
-# Custom filebeat prospectors
-filebeat_config_filebeat_prospectors__custom: []
+# Custom filebeat inputs
+filebeat_config_filebeat_inputs__custom: []
 
-# Final filebeat prospectors
-filebeat_config_filebeat_prospectors: "{{
-  filebeat_config_filebeat_prospectors__default +
-  filebeat_config_filebeat_prospectors__custom }}"
+# Final filebeat inputs
+filebeat_config_filebeat_inputs: "{{
+  filebeat_config_filebeat_inputs__default +
+  filebeat_config_filebeat_inputs__custom }}"
 
 
 # Default paths of the filebeat
 filebeat_config_filebeat__default:
-  prospectors: "{{ filebeat_config_filebeat_prospectors }}"
+  inputs: "{{ filebeat_config_filebeat_inputs }}"
 
 # Custom filebeat
 filebeat_config_filebeat__custom: {}
 
 # Final filebeat
 filebeat_config_filebeat: "{{
-  filebeat_config_filebeat__default.update(
-  filebeat_config_filebeat__custom) }}{{
-  filebeat_config_filebeat__default }}"
+  filebeat_config_filebeat__default | combine(
+  filebeat_config_filebeat__custom) }}"
 
 
 # List of hosts of the output elasticsearch
@@ -141,9 +143,8 @@ filebeat_config_output_elasticsearch__custom: {}
 
 # Final output elasticsearch
 filebeat_config_output_elasticsearch: "{{
-  filebeat_config_output_elasticsearch__default.update(
-  filebeat_config_output_elasticsearch__custom) }}{{
-  filebeat_config_output_elasticsearch__default }}"
+  filebeat_config_output_elasticsearch__default | combine(
+  filebeat_config_output_elasticsearch__custom) }}"
 
 
 # Default output
@@ -155,9 +156,8 @@ filebeat_config_output__custom: {}
 
 # Final output
 filebeat_config_output: "{{
-  filebeat_config_output__default.update(
-  filebeat_config_output__custom) }}{{
-  filebeat_config_output__default }}"
+  filebeat_config_output__default | combine(
+  filebeat_config_output__custom) }}"
 
 
 # Default configuration
@@ -170,9 +170,8 @@ filebeat_config__custom: {}
 
 # Final configuration
 filebeat_config: "{{
-  filebeat_config__default.update(
-  filebeat_config__custom) }}{{
-  filebeat_config__default }}"
+  filebeat_config__default | combine(
+  filebeat_config__custom) }}"
 ```
 
 

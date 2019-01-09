@@ -3,8 +3,8 @@
 - name: Test distribution
   assert:
     that: >
-      ansible_os_family == "RedHat" or
-      ansible_os_family == "Debian"
+      ansible_facts.os_family == "RedHat" or
+      ansible_facts.os_family == "Debian"
 
 - name: Create Filebeat YUM repo file
   yum_repository:
@@ -12,9 +12,9 @@
     description: Elastic YUM repo
     baseurl: "{{ filebeat_yum_repo_url }}"
     gpgkey: "{{ filebeat_yum_repo_key }}"
-    params: "{{ filebeat_yum_repo_params }}"
+  args: "{{ filebeat_yum_repo_params }}"
   when: >
-    ansible_os_family == 'RedHat'
+    ansible_facts.os_family == 'RedHat'
   tags:
     - filebeat_pkg
 
@@ -22,7 +22,7 @@
   apt_key:
     url: "{{ filebeat_apt_repo_key }}"
   when: >
-    ansible_os_family == 'Debian'
+    ansible_facts.os_family == 'Debian'
   tags:
     - filebeat_pkg
     - filebeat_aptrepo
@@ -30,8 +30,9 @@
 - name: Create Filebeat APT repo file
   apt_repository:
     repo: "{{ filebeat_apt_repo_string }}"
+  args: "{{ filebeat_apt_repo_params }}"
   when: >
-    ansible_os_family == 'Debian'
+    ansible_facts.os_family == 'Debian'
   tags:
     - filebeat_pkg
     - filebeat_aptrepo
